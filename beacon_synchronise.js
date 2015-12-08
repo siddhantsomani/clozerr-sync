@@ -1,3 +1,4 @@
+var registry = global.registry;
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
 
@@ -21,8 +22,8 @@ db.once('open',function(){
 	LastSynchronized: Date
 });*/
 
-var beaconSynchronise = function (){
-	var Vendor = mongoose.model('Vendor',edittedSchema); // Replace Vendor by Model Name
+var beacon_synchronise = function (){
+	var Vendor = registry.getSharedObject('models_Vendor');
 	Vendor.find().$where("this.last_modified > this.sync_data.beaconstac.last_synchronised").exec(function (err,vendor){
 			if(err)
 				throw err;
@@ -43,5 +44,5 @@ var beaconSynchronise = function (){
 	});
 	
 }
-eventEmitter.on('beaconSynchronise',beaconSynchronise);
+eventEmitter.on('beacon_synchronise',beacon_synchronise);
 
