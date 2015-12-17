@@ -36,13 +36,15 @@ var beacon_synchronise = function (){
 						if(err)
 							console.log("Synchronisation Error - ",vendor[i].name);
 					});
+					//Synchronize beacons and location fields
+					
+					var set_place_promise = set_place(vendor[i].name, vendor[i].location[0], vendor[i].location[1], vendor[i].geofences);//For synchronising the location
+					var set_beacon_promise = set_beacon(vendor[i].beacons.beacon_id,vendor[i].beacons.title,vendor[i].beacons.major, vendor[i].beacons.minor,vendor[i].name, vendor[i].beacons.message);
 				}
 				//TESTING Synchronisation: console.log(vendors);
-				//Update DB Using API (SDK)
-				
+
 			}
 	});
-	
+
 }
 eventEmitter.on('beacon_synchronise',beacon_synchronise);
-
